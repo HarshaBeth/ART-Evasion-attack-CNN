@@ -1,4 +1,4 @@
-# Adversarial Robustness Toolbox (ART) <br> ~~ Evasion Attacks on CNN classification model
+# Adversarial Robustness Toolbox (ART) <br> ~~ Evasion Attacks and Defense on CNN classification model
 ![image](https://github.com/user-attachments/assets/73ca3d70-672b-415c-8b77-216dfc9e470e)
 
 ## Impact
@@ -82,6 +82,27 @@ With this completed, we can now start our attacks. We will assess 3 attacks with
  
  ![image](https://github.com/user-attachments/assets/1d80367d-105c-4619-a8a9-eabfe4d235e2)
 
+<br>
+<hr>
+<br>
 
+# Defense ~ Model Training with Adversarial Data
+After creating our model, it is crucial to train its defense against such evasion attacks. Utilizing the ```AdversarialTrainer``` function from the ART library, we can train our model on the previous attacks.  
 
+```
+trainer = AdversarialTrainer(classifier, attacks=[attack, attack2, attack3], ratio=0.5)
+trainer.fit(x_train, y_train, nb_epochs=5, batch_size=128)
+```
+As seen in the code above, all 3 attack strengths are used to train our model to be robust. The ratio used is 0.5 to ensure both the original and adversarial data are being used equally for training.
+
+## Model Robustness Evaluation
+Moving forward, after successfully completing the training, the newly guarded model must be evaluated and the results obtained are as follows:
+- Accuracy on original test data: 99.37%
+- Accuracy on adversarial test data with epsilon 0.1: 97.86%
+- Accuracy on adversarial test data with epsilon 0.2: 94.42%
+- Accuracy on adversarial test data with epsilon 0.3: 89.70%
+
+Our model has been trained well and gives us great accuracy albeit attempted attacks! The difference before and after adversarial training can be seen in the plotting graph below:
+
+![image](https://github.com/user-attachments/assets/050cfd66-d344-4414-aa9c-3124c7f7cf30)
 
